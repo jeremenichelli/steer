@@ -52,7 +52,7 @@ steer.init()
 Work with existing scrolling functions
 --------------------------------------
 
-There's a chance that you already do things when the scrolling event happens. In that case you just need to set the `up()` and `down()` functions and then call `steer.trigger()` inside the event function, and that's it!
+There's a chance that you already do things when the scroll event happens. In that case you just need to set the `up()` and `down()` functions and then call `steer.trigger()` inside the event function, and that's it!
 
 js```
 steer.
@@ -72,8 +72,7 @@ window.addEventListener('scroll', function(){
 	steer.trigger();
 	// do other super smart things
 } ,false);
-```
-
+``` 
 
 Fire events after some scrolling
 --------------------------------
