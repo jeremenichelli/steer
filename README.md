@@ -1,11 +1,9 @@
-steer
-=====
+# steer
 
 Script that fires events *only* when the scrolling direction changes.
 
 
-Use
----
+## Use
 
 To get this script working just add it to your web project and initialize it:
 
@@ -54,7 +52,7 @@ Work with existing scrolling functions
 
 There's a chance that you already do things when the scroll event happens. In that case you just need to set the `up()` and `down()` functions and then call `steer.trigger()` inside the event function, and that's it!
 
-js```
+```js
 steer.
      .up(
         function(){
@@ -72,10 +70,9 @@ window.addEventListener('scroll', function(){
 	steer.trigger();
 	// do other super smart things
 } ,false);
-``` 
+```
 
-Fire events after some scrolling
---------------------------------
+### Fire events after some scrolling
 
 If you wanna set a gap, and start firing the functions after a certain number of scrolled pixels just call this function:
 
