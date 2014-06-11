@@ -3,8 +3,50 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Steer test</title>
+	<style>
+		body {
+			background: #3366EE;
+		}
+
+		#scroll-msg {
+			--webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			box-sizing: border-box;
+			color: #FFFFFF;
+			position: fixed;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			right: 0;
+			margin: auto;
+			height:30px;
+			width: 100%;
+			text-align: center;
+			font-size: 20px;
+			line-height: 1.5em;
+			padding: 5px;
+			text-shadow: 0 0 4px #0022AA;
+		}
+	</style>
 </head>
-<body style="height:1000px">
+<body style="height:3000px">
+	<div id="scroll-msg">
+		Everytime you change the scrolling direction you'll see a message here
+	</div>
 	<script src="js/steer.js"></script>
+	<script>
+		// getting the element where the message goes
+		var msg = document.getElementById('scroll-msg');
+		// calling steer
+		steer
+			.init()
+			.up(function(){
+				msg.innerHTML = "&#8593; You started to scroll back to the top!";
+			})
+			.down(function(){
+				msg.innerHTML = "&#8595; You started to scroll down!";
+			});
+
+	</script>
 </body>
 </html>
