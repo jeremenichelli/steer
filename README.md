@@ -14,11 +14,11 @@ To get this script working just add it to your web project and initialize it:
 Of course you need to set the functions you want to fire when the scroll direction has changed. When the user changes the scrolling direction and starts going up you do this:
 
 ```js
-`steer.up(`
-`    function(){`
-`        // do something`
-`   }`
-`);
+steer.up(
+    function(){
+       // do something
+   }
+);
 ```
 
 And when the user changes the direction and starts going down:
@@ -66,11 +66,7 @@ steer.
             // do something else
          }
       );
-```
 
-And then...
-
-js```
 window.addEventListener('scroll', function(){
 	// do some things
 	steer.trigger();
