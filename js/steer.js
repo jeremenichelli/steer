@@ -9,8 +9,8 @@
 })(this, function(){
 	var y = 0
 	, gap = 0
-	, direction = 'down'
-	, oldDirection = 'down';
+	, direction = ''
+	, oldDirection = '';
 
 	var methods = {
 		'up' : undefined,
@@ -55,7 +55,7 @@
 			if (direction !== oldDirection){
 				fn = (direction === 'up') ? methods.up : methods.down;
 				oldDirection = direction;
-				if(typeof fn !== "undefined"){
+				if(typeof fn == "function"){
 					try {
 						fn();
 					} catch(e) {
