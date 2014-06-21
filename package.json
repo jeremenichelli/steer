@@ -1,0 +1,14 @@
+{
+  "name": "steer",
+  "title": "steer",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jeremenichelli/steer.git"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.1",
+    "gulp-rename": "^1.2.0",
+    "gulp-uglify": "^0.3.1",
+    "gulp-jshint": "^1.6.3"
+  }
+}

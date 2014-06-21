@@ -1,0 +1,13 @@
+{
+    "bitwise": true,
+    "camelcase": true,
+    "curly": false,
+    "indent": 4,
+    "immed": true,
+    "latedef": true,
+    "newcap": true,
+    "noarg": true,
+    "quotmark": "single",
+    "regexp": true,
+    "unused": true
+}
