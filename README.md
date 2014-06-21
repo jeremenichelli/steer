@@ -78,6 +78,14 @@ If you wanna set a gap, and start firing the functions after a certain number of
 
 `steer.gap(150)`
 
+You can also fire a function when the user comes in the gap:
+
+`steer.gap(150, function(position){
+   //do something
+   console.log("You've scrolled " + position + "px.")
+})`
+
+You'll always receive the actual scroll position, when any function is fired, as a parameter if you feel like you need to use.
 
 THAT'S IT! Hope you find this useful, let me know if you see any issues.
 
