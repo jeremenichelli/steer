@@ -7,6 +7,7 @@ gulp.task('default', function(){
     return gulp.src('src/*.js')
         .pipe(jshint())
         .pipe(jshint.reporter('default'))
+        .pipe(gulp.dest('dist/'))
         .pipe(uglify())
         .pipe(rename({
             suffix: '.min'
