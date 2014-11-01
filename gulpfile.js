@@ -1,16 +1,36 @@
 var gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     rename = require('gulp-rename'),
-    jshint = require('gulp-jshint');
+    jshint = require('gulp-jshint'),
+    concatUtil = require('gulp-concat-util'),
+    package = require('./package.json');
 
-gulp.task('default', function(){
-    return gulp.src('src/*.js')
-        .pipe(jshint())
-        .pipe(jshint.reporter('default'))
-        .pipe(gulp.dest('dist/'))
+// header
+var header = '// ' + package.title + ' - ' + package.author + '\n' 
+    + '// ' + package.repository.url + ' - MIT License\n\n';
+
+// paths
+paths = {
+    src: 'src/' + package.name + '.js',
+    output: 'dist/'
+}
+
+gulp.task('minify', [ 'test' ], function(){
+    return gulp.src(paths.src)
+        .pipe(concatUtil.header(header))
+        .pipe(gulp.dest(paths.output))
         .pipe(uglify())
         .pipe(rename({
             suffix: '.min'
         }))
-        .pipe(gulp.dest('dist/'))
+        .pipe(gulp.dest(paths.output))
 });
+
+gulp.task('test', function () {
+    return gulp.src(paths.src)
+        .pipe(jshint())
+        .pipe(jshint.reporter('jshint-stylish'))
+        .pipe(jshint.reporter('fail'));
+});
+
+gulp.task('default', [ 'minify' ]);

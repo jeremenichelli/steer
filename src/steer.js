@@ -7,7 +7,8 @@
     root.steer = factory(root);
   }
 })(this, function(){
-    var y = 0,
+    var steer,
+        y = 0,
         gap = 0,
         direction = 'gap',
         oldDirection = 'gap';
@@ -18,12 +19,12 @@
         'down' : undefined
     };
 
-    var init = function(){
+    var _init = function () {
         _bindScrolling(_compareDirection);
-        return window.steer;
+        return steer;
     };
 
-    var _bindScrolling = function(fn){
+    var _bindScrolling = function (fn) {
         if(window.addEventListener){
             window.addEventListener('scroll', fn, false);
         } else if (window.attachEvent){
@@ -33,11 +34,11 @@
         }
     };
 
-    var _getYPosition = function(){
+    var _getYPosition = function () {
         return window.scrollY || window.pageYOffset;
     };
 
-    var _getDirection = function(){
+    var _getDirection = function () {
         var actualPosition = _getYPosition(),
             direction = (y < gap) ? 'gap' : (y < actualPosition) ? 'down' : 'up';
 
@@ -46,43 +47,45 @@
         return direction;
     };
 
-    var _compareDirection = function(){
+    var _compareDirection = function () {
         direction = _getDirection();
 
-        if (direction !== oldDirection){
+        if (direction !== oldDirection) {
             oldDirection = direction;
             fn = methods[direction];
-            if(typeof fn == 'function'){
+            if(typeof fn == 'function') {
                 try {
                     fn(y);
                 } catch(e) {
-                    console.log(e);
+                    console.error(e);
                 }
             }
         }
     };
 
-    var up = function(callback){
+    var _up = function (callback) {
         methods.up = callback;
-        return window.steer;
+        return steer;
     };
 
-    var down = function(callback){
+    var _down = function (callback) {
         methods.down = callback;
-        return window.steer;
+        return steer;
     };
 
-    var _setGap = function(n, fn){
+    var _setGap = function (n, fn) {
         gap = n;
         methods.gap = fn;
-        return window.steer;
+        return steer;
     };
 
-    return {
-        init : init,
-        up : up,
-        down : down,
+    steer = {
+        init : _init,
+        up : _up,
+        down : _down,
         gap : _setGap,
         trigger : _compareDirection
     };
+
+    return steer;
 });
