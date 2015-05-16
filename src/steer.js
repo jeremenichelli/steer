@@ -1,91 +1,88 @@
-(function(root, factory){
+(function(root, factory) {
     if (typeof define === 'function' && define.amd) {
-    define(factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory;
-  } else {
-    root.steer = factory(root);
-  }
-})(this, function(){
-    var steer,
-        y = 0,
-        gap = 0,
-        direction = 'gap',
-        oldDirection = 'gap';
+        define(factory);
+    } else if (typeof exports === 'object') {
+        module.exports = factory;
+    } else {
+        root.steer = factory();
+    }
+})(this, function() {
+    var y = 0,
+        config = {
+            events: true,
+            up: undefined,
+            down: undefined
+        },
+        direction = 'null',
+        oldDirection = 'null',
+        root = window;
 
-    var methods = {
-        'gap' : undefined,
-        'up' : undefined,
-        'down' : undefined
-    };
-
-    var _init = function () {
-        _bindScrolling(_compareDirection);
-        return steer;
-    };
-
-    var _bindScrolling = function (fn) {
-        if(window.addEventListener){
-            window.addEventListener('scroll', fn, false);
-        } else if (window.attachEvent){
-            window.attachEvent('onscroll', fn);
+    var _bindScrollEvent = function(fn) {
+        if (root.addEventListener) {
+            root.addEventListener('scroll', fn, false);
+        } else if (root.attachEvent) {
+            root.attachEvent('onscroll', fn);
         } else {
-            window.onscroll = fn;
+            root.onscroll = fn;
         }
     };
 
-    var _getYPosition = function () {
-        return window.scrollY || window.pageYOffset;
-    };
-
-    var _getDirection = function () {
-        var actualPosition = _getYPosition(),
-            direction = (y < gap) ? 'gap' : (y < actualPosition) ? 'down' : 'up';
-
-        y = actualPosition;
-
-        return direction;
-    };
-
-    var _compareDirection = function () {
-        direction = _getDirection();
-
-        if (direction !== oldDirection) {
-            oldDirection = direction;
-            fn = methods[direction];
-            if(typeof fn == 'function') {
-                try {
-                    fn(y);
-                } catch(e) {
-                    console.error(e);
+    var _setConfigObject = function(obj) {
+        // override with custom attributes
+        if (typeof obj === 'object') {
+            for (var key in config) {
+                if (typeof obj[key] !== 'undefined') {
+                    config[key] = obj[key];
                 }
             }
         }
     };
 
-    var _up = function (callback) {
-        methods.up = callback;
-        return steer;
+    var _safeFn = function(fn, args) {
+        if (typeof fn === 'function') {
+            try {
+                fn.apply(null, args);
+            } catch (e) {
+                console.error(e);
+            }
+        }
     };
 
-    var _down = function (callback) {
-        methods.down = callback;
-        return steer;
+    var _set = function(configObj) {
+        _setConfigObject(configObj);
+
+        if (config.events) {
+            _bindScrollEvent(_compareDirection);
+        }
     };
 
-    var _setGap = function (n, fn) {
-        gap = n;
-        methods.gap = fn;
-        return steer;
+    var _getYPosition = function() {
+        return root.scrollY || root.pageYOffset || document.documentElement.scrollTop;
     };
 
-    steer = {
-        init : _init,
-        up : _up,
-        down : _down,
-        gap : _setGap,
-        trigger : _compareDirection
+    var _getDirection = function() {
+        var actualPosition = _getYPosition(),
+            direction;
+
+        direction = (actualPosition < y) ? 'up' : 'down';
+
+        // updates general position variable
+        y = actualPosition;
+
+        return direction;
     };
 
-    return steer;
+    var _compareDirection = function() {
+        direction = _getDirection();
+
+        if (direction !== oldDirection) {
+            oldDirection = direction;
+            _safeFn(config[direction], [ y ]);
+        }
+    };
+
+    return {
+        set: _set,
+        trigger: _compareDirection
+    };
 });

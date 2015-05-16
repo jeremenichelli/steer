@@ -1,95 +1,82 @@
-# steer
+# steer [![Build Status](https://travis-ci.org/jeremenichelli/steer.svg)](https://travis-ci.org/jeremenichelli/steer)
 
-Script that fires events *only* when the scrolling direction changes.
+Script that fires events *only* when the user changes the scrolling direction.
 
 
-## Use
+### Install
 
-To get this script working just add it to your web project and initialize it:
+After you included the script in your project or just added a script tag with the file
 
-`steer.init();`
-
-Of course you need to set the functions you want to fire when the scroll direction has changed. When the user changes the scrolling direction and starts going up you do this:
-
-```js
-steer.up(
-    function(){
-       // do something
-   }
-);
+```html
+<script src="js/steer.js"></script>
 ```
 
-And when the user changes the direction and starts going down:
+It's also available on *bower*
 
-```js
-steer.down(
-    function(){
-       // do something
-   }
-);
+```bash
+bower install steer --save-dev
+```
+
+... and *npm* as **steerjs**
+
+```bash
+npm install steerjs --save-dev
 ```
 
 
-Pretty easy, right? Well, you can actually chain this functions;
+### steer.set()
+
+After you page has loaded you can start the script by calling the ```set``` method. To cofigure the actions you want to be executed everytime the user changes the scroll direction.
 
 ```js
-steer.init()
-     .up(
-        function(){
-            // do something
-         }
-      )
-     .down(
-        function(){
-            // do something else
-         }
-      );
-```
-
-
-Work with existing scrolling functions
---------------------------------------
-
-There's a chance that you already do things when the scroll event happens. In that case you just need to set the `up()` and `down()` functions and then call `steer.trigger()` inside the event function, and that's it!
-
-```js
-steer
-     .up(
-        function(){
-            // do something
-         }
-      )
-     .down(
-        function(){
-            // do something else
-         }
-      );
-
-window.addEventListener('scroll', function(){
-	// do some things
-	steer.trigger();
-	// do other super smart things
-} ,false);
-```
-
-### Fire events after some scrolling
-
-If you wanna set a gap, and start firing the functions after a certain number of scrolled pixels just call this function:
-
-`steer.gap(150)`
-
-You can also fire a function when the user comes in the gap:
-
-```js
-steer.gap(150, function(position){
-  //do something
-  console.log("You've scrolled " + position + "px.");
+steer.set({
+    up: function() {
+        // do something when the user starts scrolling up
+    },
+    down: function() {
+        // do something when the user starts scrolling down
+    }
 });
 ```
 
-You'll always receive the actual scroll position, when any function is fired, as a parameter if you feel like you will need it.
+In case you need it the *y* position when the function is fired is passed as an argument if you need it.
 
-THAT'S IT! Hope you find this useful, let me know if you see any issues.
+```js
+steer.set({
+    up: function(y) {
+        console.log('up method fire at ' + y + 'px!');
+    }
+});
+```
 
-Happy coding!
+### steer.trigger()
 
+There is a chance you're doing some other things when the window scrolls. If that's the case *steer* might override those when is set. To avoid this you can pass a flag called ```events``` with the value ```false``` in the configuration object.
+
+```js
+steer.set({
+    events: false,
+    up: function(y) {
+        console.log('up method fire at ' + y + 'px!');
+    }
+});
+```
+
+Then to make it work you have to call *steer.trigger()* in the scroll event you're declaring.
+
+```js
+window.addEventListener('scroll, function() {
+    // do things on scroll
+    steer.trigger();
+}, 'false);
+```
+
+
+### Size
+
+**steer** is really light, only 2.23Kb uncompressed, 650 bytes minified and 392 bytes gzipped.
+
+
+### Contribute
+
+Feel free to rise an issue or suggest a change that you think that can improve this code.
