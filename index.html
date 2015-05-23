@@ -461,7 +461,7 @@
                 width: 100%;
             }
 
-            header {
+            #header {
                 background-color: #00c853;
             }
 
@@ -474,7 +474,7 @@
             }
 
             .hero p,
-            header p {
+            #header p {
                 color: #ffffff;
                 font-weight: 300;
             }
@@ -483,7 +483,18 @@
                 color: #FFFFFF;
                 font-family: 'Roboto Condensed', Helvetica, sans-serif;
                 font-weight: 300;
-                line-height: 2em;
+                font-size: 3em;
+                line-height: 1.25em;
+                margin: 0;
+            }
+
+            p.author {
+                text-transform: uppercase;
+                margin: 0;
+            }
+
+            #footer p {
+                font-size: 1em;
             }
 
             a {
@@ -494,8 +505,9 @@
                 font-size: 1.25em;
                 position: fixed;
                 top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
+                left: 0;
+                text-align: center;
+                width: 100%;
                 z-index: -1;
             }
 
@@ -505,28 +517,32 @@
         </style>
 </head>
 <body>
-    <header>
+    <div id="header">
         <div class="container">
-            <h1>steer</h1>
+            <h1>
+                <strong>steer</strong>
+            </h1>
+            <p class="author">by Jeremias Menichelli</p>
             <p>Script that fires events <strong>only</strong> when the user changes the scrolling direction.</p>
         </div>
-    </header>
-    <section class="hero">
+    </div>
+
+    <div class="hero">
         <div class="container">
             <p>Scroll down and up again and you will notice that a message is displayed on the page informing in which scrolling point it was fired.</p>
             <p>
                 You can download the code from the <a href="https://github.com/jeremenichelli/steer">github&nbsp;repository</a> or download it from <strong>bower</strong> as <strong>steer</strong> and <strong>npm</strong> as <strong>steerjs</strong>.
             </p>
             <p>
-            <strong>Support:</strong> Chrome, Firefox, Safari and IE9+</p>
+            <strong>Support:</strong> Chrome, Firefox, Safari and IE8+</p>
         </div>
-    </section>
-    <section class="main"></section>
-    <footer>
+    </div>
+    <div class="main"></div>
+    <div id="footer">
         <div class="container">
-            2014 &copy; Jeremias Menichelli - MIT License
+            <p>2014 &copy; Jeremias Menichelli - MIT License</p>
         </div>
-    </footer>
+    </div>
     <div id="scroll-msg">
         Start scrolling to see <span>how it works</span>
     </div>
@@ -549,7 +565,7 @@
             });
             window.onscroll = function() {
                 var y = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
-                if (y > 250) {
+                if (y > 300) {
                     steer.trigger();
                 } else {
                     msg.innerHTML = "Start scrolling to see <span>how it works</span>";

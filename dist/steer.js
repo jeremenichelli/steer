@@ -1,5 +1,5 @@
 /*
- * steer - v2.0.0
+ * steer - v2.0.1
  * https://github.com/jeremenichelli/steer
  * 2014 (c) Jeremias Menichelli - MIT License
 */
@@ -23,6 +23,11 @@
         oldDirection = 'null',
         root = window;
 
+    /*
+     * Binds event on scroll
+     * @method
+     * @param {function} fn - function to call on scroll
+     */
     var _bindScrollEvent = function(fn) {
         if (root.addEventListener) {
             root.addEventListener('scroll', fn, false);
@@ -33,6 +38,11 @@
         }
     };
 
+    /*
+     * Replaces configuration values with custom ones
+     * @method
+     * @param {object} obj - object containing custom options
+     */
     var _setConfigObject = function(obj) {
         // override with custom attributes
         if (typeof obj === 'object') {
@@ -44,6 +54,12 @@
         }
     };
 
+    /*
+     * Calls a function inside a try catch structure
+     * @method
+     * @param {function} fn - function to call
+     * @param {array} args - arguments to use in the function
+     */
     var _safeFn = function(fn, args) {
         if (typeof fn === 'function') {
             try {
@@ -54,6 +70,11 @@
         }
     };
 
+    /*
+     * Main function which sets all variables and bind events if needed
+     * @method
+     * @param {object} configObj - object containing custom options
+     */
     var _set = function(configObj) {
         _setConfigObject(configObj);
 
@@ -62,10 +83,18 @@
         }
     };
 
+    /*
+     * Cross browser way to get how much is scrolled
+     * @method
+     */
     var _getYPosition = function() {
         return root.scrollY || root.pageYOffset || document.documentElement.scrollTop;
     };
 
+    /*
+     * Returns direction and updates position variable
+     * @method
+     */
     var _getDirection = function() {
         var actualPosition = _getYPosition(),
             direction;
@@ -78,6 +107,10 @@
         return direction;
     };
 
+    /*
+     * Compares old and new directions and call specific function
+     * @method
+     */
     var _compareDirection = function() {
         direction = _getDirection();
 

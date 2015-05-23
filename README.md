@@ -1,23 +1,23 @@
 # steer [![Build Status](https://travis-ci.org/jeremenichelli/steer.svg)](https://travis-ci.org/jeremenichelli/steer)
 
-Script that fires events *only* when the user changes the scrolling direction.
+Script that fires events **only** when the user changes the scrolling direction.
 
 
 ### Install
 
-After you included the script in your project or just added a script tag with the file
+Include the distribution file in your project
 
 ```html
-<script src="js/steer.js"></script>
+<script src="js/steer.min.js"></script>
 ```
 
-It's also available on *bower*
+also available on **bower**
 
 ```bash
 bower install steer --save-dev
 ```
 
-... and *npm* as **steerjs**
+... and **npm** as **steerjs**
 
 ```bash
 npm install steerjs --save-dev
@@ -26,7 +26,7 @@ npm install steerjs --save-dev
 
 ### steer.set()
 
-After you page has loaded you can start the script by calling the ```set``` method. To cofigure the actions you want to be executed everytime the user changes the scroll direction.
+This method ```set``` lets you configure the actions to be called everytime the user changes the scroll direction.
 
 ```js
 steer.set({
@@ -39,7 +39,7 @@ steer.set({
 });
 ```
 
-In case you need it the *y* position when the function is fired is passed as an argument if you need it.
+In case you need it, the **y** position when the function was fired is passed as an argument.
 
 ```js
 steer.set({
@@ -51,7 +51,7 @@ steer.set({
 
 ### steer.trigger()
 
-There is a chance you're doing some other things when the window scrolls. If that's the case *steer* might override those when is set. To avoid this you can pass a flag called ```events``` with the value ```false``` in the configuration object.
+There is a chance you're doing some other things when the window scrolls. If that's the case **steer** might override those when is set. To avoid this you can pass a flag called ```events``` with the value ```false``` in the configuration object.
 
 ```js
 steer.set({
@@ -62,19 +62,19 @@ steer.set({
 });
 ```
 
-Then to make it work you have to call *steer.trigger()* in the scroll event you're declaring.
+Then to make it work you have to call **steer.trigger()** in the scroll event you're declaring.
 
 ```js
-window.addEventListener('scroll, function() {
+window.addEventListener('scroll', function() {
     // do things on scroll
     steer.trigger();
-}, 'false);
+}, false);
 ```
 
 
 ### Size
 
-**steer** is really light, only 2.23Kb uncompressed, 650 bytes minified and 392 bytes gzipped.
+**steer** is really light, only 3.1KB uncompressed, 650 bytes minified and 392 bytes gzipped.
 
 
 ### Contribute
