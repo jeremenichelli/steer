@@ -1,5 +1,5 @@
 /*
- * steer - v2.0.1
+ * steer - v2.0.2
  * https://github.com/jeremenichelli/steer
  * 2014 (c) Jeremias Menichelli - MIT License
 */
