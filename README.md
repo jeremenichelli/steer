@@ -1,4 +1,6 @@
-# steer [![Build Status](https://travis-ci.org/jeremenichelli/steer.svg)](https://travis-ci.org/jeremenichelli/steer)
+# steer
+
+[![Build Status](https://travis-ci.org/jeremenichelli/steer.svg)](https://travis-ci.org/jeremenichelli/steer)
 
 Script that fires events **only** when the user changes the scrolling direction.
 
