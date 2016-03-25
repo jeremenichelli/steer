@@ -16,13 +16,13 @@ Include the distribution file in your project
 also available on **bower**
 
 ```bash
-bower install steer --save-dev
+bower install steer --save
 ```
 
 ... and **npm** as **steerjs**
 
 ```bash
-npm install steerjs --save-dev
+npm install steerjs --save
 ```
 
 
@@ -53,7 +53,7 @@ steer.set({
 
 ### steer.trigger()
 
-There is a chance you're doing some other things when the window scrolls. If that's the case **steer** might override those when is set. To avoid this you can pass a flag called ```events``` with the value ```false``` in the configuration object.
+You can pass a flag called ```events``` with the value ```false``` in the configuration object so no listeners are added **on scroll**.
 
 ```js
 steer.set({
@@ -64,11 +64,11 @@ steer.set({
 });
 ```
 
-Then to make it work you have to call **steer.trigger()** in the scroll event you're declaring.
+Then for **steer** to work you need to call `steer.trigger()` in the scroll event in your code.
 
 ```js
 window.addEventListener('scroll', function() {
-    // do things on scroll
+    // do other things on scroll ...
     steer.trigger();
 }, false);
 ```
@@ -76,7 +76,12 @@ window.addEventListener('scroll', function() {
 
 ### Size
 
-**steer** is really light, only 3.1KB uncompressed, 650 bytes minified and 392 bytes gzipped.
+**steer** is really light, **364 bytes** minified and gzipped!
+
+
+### Browser support
+
+This library works perfect in the latest version of all modern browsers and Internet Explorer 9+, and requires `requestAnimationFrame` and `addEventListener` support.
 
 
 ### Contribute

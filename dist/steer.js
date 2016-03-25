@@ -5,6 +5,8 @@
 */
 
 (function(root, factory) {
+    'use strict';
+
     if (typeof define === 'function' && define.amd) {
         define(factory);
     } else if (typeof exports === 'object') {
@@ -13,35 +15,30 @@
         root.steer = factory();
     }
 })(this, function() {
+    'use strict';
+
     var y = 0,
+        root = window,
         config = {
             events: true,
-            up: undefined,
-            down: undefined
+            up: function() {},
+            down: function() {}
         },
-        direction = 'null',
-        oldDirection = 'null',
-        root = window;
+        direction = null,
+        oldDirection = null,
+        ticking = false;
 
-    /*
-     * Binds event on scroll
-     * @method
-     * @param {function} fn - function to call on scroll
-     */
-    var _bindScrollEvent = function(fn) {
-        if (root.addEventListener) {
-            root.addEventListener('scroll', fn, false);
-        } else if (root.attachEvent) {
-            root.attachEvent('onscroll', fn);
-        } else {
-            root.onscroll = fn;
-        }
-    };
+    // request animation frame and cancel animation frame vendors
+    var rAF = (function() {
+        return root.requestAnimationFrame ||
+            root.webkitRequestAnimationFrame ||
+            root.mozRequestAnimationFrame;
+    })();
 
     /*
      * Replaces configuration values with custom ones
-     * @method
-     * @param {object} obj - object containing custom options
+     * @method _setConfigObject
+     * @param {Object} obj - object containing custom options
      */
     var _setConfigObject = function(obj) {
         // override with custom attributes
@@ -55,51 +52,35 @@
     };
 
     /*
-     * Calls a function inside a try catch structure
-     * @method
-     * @param {function} fn - function to call
-     * @param {array} args - arguments to use in the function
-     */
-    var _safeFn = function(fn, args) {
-        if (typeof fn === 'function') {
-            try {
-                fn.apply(null, args);
-            } catch (e) {
-                console.error(e);
-            }
-        }
-    };
-
-    /*
      * Main function which sets all variables and bind events if needed
-     * @method
-     * @param {object} configObj - object containing custom options
+     * @method _set
+     * @param {Object} configObj object containing custom options
      */
     var _set = function(configObj) {
         _setConfigObject(configObj);
 
         if (config.events) {
-            _bindScrollEvent(_compareDirection);
+            root.addEventListener('scroll', _debounceCompare);
         }
     };
 
     /*
      * Cross browser way to get how much is scrolled
-     * @method
+     * @method _getYPosition
      */
     var _getYPosition = function() {
-        return root.scrollY || root.pageYOffset || document.documentElement.scrollTop;
+        return root.scrollY || root.pageYOffset;
     };
 
     /*
      * Returns direction and updates position variable
-     * @method
+     * @method _getDirection
      */
     var _getDirection = function() {
         var actualPosition = _getYPosition(),
             direction;
 
-        direction = (actualPosition < y) ? 'up' : 'down';
+        direction = actualPosition < y ? 'up' : 'down';
 
         // updates general position variable
         y = actualPosition;
@@ -109,15 +90,31 @@
 
     /*
      * Compares old and new directions and call specific function
-     * @method
+     * @method _compareDirection
      */
     var _compareDirection = function() {
         direction = _getDirection();
 
+        // when direction changes update and call method
         if (direction !== oldDirection) {
             oldDirection = direction;
-            _safeFn(config[direction], [ y ]);
+            config[direction].call(root, y);
         }
+
+        // reset ticking
+        ticking = false;
+    };
+
+    /*
+     * Debounces direction compare using requestAnimationFrame according to technic
+     * exposed by Paul Lewis http://www.html5rocks.com/en/tutorials/speed/animations/
+     * @method _debounceCompare
+     */
+    var _debounceCompare = function() {
+        if (!ticking) {
+            rAF(_compareDirection);
+        }
+        ticking = true;
     };
 
     return {

@@ -13,7 +13,8 @@
     "url": "git+ssh://git@github.com/jeremenichelli/steer.git"
   },
   "scripts": {
-    "test": "gulp test"
+    "test": "gulp test",
+    "build": "gulp build"
   },
   "devDependencies": {
     "gulp": "^3.9.0",
