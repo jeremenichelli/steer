@@ -81,7 +81,7 @@ window.addEventListener('scroll', function() {
 
 ### Browser support
 
-This library works perfect in the latest version of all modern browsers and Internet Explorer 9+, and requires `requestAnimationFrame` and `addEventListener` support.
+This library works perfect in the latest version of all modern browsers and Internet Explorer 9+, and requires `addEventListener` support.
 
 
 ### Contribute
