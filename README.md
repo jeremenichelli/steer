@@ -76,7 +76,7 @@ window.addEventListener('scroll', function() {
 
 ### Size
 
-**steer** is really light, **364 bytes** minified and gzipped!
+**steer** is really light, **307 bytes** minified and gzipped!
 
 
 ### Browser support

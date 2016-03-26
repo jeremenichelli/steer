@@ -19,15 +19,7 @@
             down: function() {}
         },
         direction = null,
-        oldDirection = null,
-        ticking = false;
-
-    // request animation frame and cancel animation frame vendors
-    var rAF = (function() {
-        return root.requestAnimationFrame ||
-            root.webkitRequestAnimationFrame ||
-            root.mozRequestAnimationFrame;
-    })();
+        oldDirection = null;
 
     /*
      * Replaces configuration values with custom ones
@@ -54,7 +46,7 @@
         _setConfigObject(configObj);
 
         if (config.events) {
-            root.addEventListener('scroll', _debounceCompare);
+            root.addEventListener('scroll', _compareDirection);
         }
     };
 
@@ -94,21 +86,6 @@
             oldDirection = direction;
             config[direction].call(root, y);
         }
-
-        // reset ticking
-        ticking = false;
-    };
-
-    /*
-     * Debounces direction compare using requestAnimationFrame according to technic
-     * exposed by Paul Lewis http://www.html5rocks.com/en/tutorials/speed/animations/
-     * @method _debounceCompare
-     */
-    var _debounceCompare = function() {
-        if (!ticking) {
-            rAF(_compareDirection);
-        }
-        ticking = true;
     };
 
     return {
